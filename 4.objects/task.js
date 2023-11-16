@@ -3,29 +3,29 @@ function Student(name, gender, age) {
   this.gender = gender;
   this.age = age;
   this.marks = [];
-}
 
-Student.prototype.setSubject = function (subjectName) {
-  Student.prototype.subject = subjectName;
-}
+  this.setSubject = function(subjectName) {
+    this.subject = subjectName;
+  }
 
-Student.prototype.addMarks = function (...marksToAdd) {
-  if (Student.hasOwnProperty("marks")) {
-    Student.marks.push(...marksToAdd);
+  this.addMarks = function(...marksToAdd) {
+    if (!this.hasOwnProperty("marks")) {
+      console.log("Error: Student has been expelled.");
+      return;
+    }
+      this.marks.push(...marksToAdd);
+  }
+
+  this.getAverage = function() {
+    if (!this.hasOwnProperty("marks") || !this.marks.length) {
+      return 0;
+    }
+      return this.marks.reduce((acc, mark) => acc + mark / this.marks.length, 0);
+  }
+
+  this.exclude = function(reason) {
+    delete this.subject;
+    delete this.marks;
+    this.excluded = reason;
   }
 }
-
-Student.prototype.getAverage = function () {
-  if (!Student.hasOwnProperty("marks") || Student.marks.length === 0) {
-    return 0;
-  } else {
-    return Student.marks.reduce((acc, mark, index, arr) => acc + mark / arr.length, 0);
-  }
-}
-
-Student.prototype.exclude = function (reason) {
-  delete Student.subject;
-  delete Student.marks;
-  Student.protoype.excluded = reason;
-}
-
